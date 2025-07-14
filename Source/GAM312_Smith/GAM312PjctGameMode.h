@@ -4,13 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
-#include "MyGAM312PjctGameModeBase.generated.h"
+#include "GAM312PjctGameMode.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class GAM312_SMITH_API AMyGAM312PjctGameModeBase : public AGameModeBase
+class GAM312_SMITH_API AGAM312PjctGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
 	
