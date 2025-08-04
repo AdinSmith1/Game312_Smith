@@ -29,6 +29,13 @@ void APlayerChar::BeginPlay()
 
 	FTimerHandle StatsTimerHandle;
 	GetWorld()->GetTimerManager().SetTimer(StatsTimerHandle, this, &APlayerChar::DecreaseStats, 2.0f, true);
+
+	if (objWidget)
+	{
+		// sets initial value to 0
+		objWidget->UpdatebuildObj(0.0f);
+		objWidget->UpdatematOBJ(0.0f);
+	}
 }
 
 // Called every frame
@@ -138,6 +145,11 @@ void APlayerChar::FindObject()
 						//give resources and reduce stamina
 						GiveResource(resourceValue, hitName);
 
+						// keeps track of how many materials the player has collected
+						matsCollected = matsCollected + resourceValue;
+
+						objWidget->UpdatematOBJ(matsCollected);
+
 						check(GEngine != nullptr);
 						GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Resource Collected!"));
 
@@ -161,8 +173,10 @@ void APlayerChar::FindObject()
 	else
 	{
 		isBuilding = false;
-		//objectBuilt = objectBuilt + 1.0f;
-		//objWidget->UpdateBuildObj(objectsBuilt);
+		// counts objects built
+		objectsBuilt = objectsBuilt + 1.0f;
+
+		objWidget->UpdatebuildObj(objectsBuilt);
 	}
 }
 
