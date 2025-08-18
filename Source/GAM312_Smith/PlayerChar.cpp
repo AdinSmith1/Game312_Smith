@@ -55,6 +55,7 @@ void APlayerChar::Tick(float DeltaTime)
 			FVector Direction = PlayerCamComp->GetForwardVector() * 400.0f;
 			FVector EndLocation = StartLocation + Direction;
 			spawnedPart->SetActorLocation(EndLocation);
+			
 		}
 	}
 }
@@ -151,7 +152,7 @@ void APlayerChar::FindObject()
 						objWidget->UpdatematOBJ(matsCollected);
 
 						check(GEngine != nullptr);
-						GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Resource Collected!"));
+						//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Resource Collected!"));
 
 						UGameplayStatics::SpawnDecalAtLocation(GetWorld(), hitDecal, FVector(10.0f, 10.0f, 10.0f), HitResult.Location, FRotator(-90, 0, 0), 2.0f);
 
@@ -197,6 +198,10 @@ void APlayerChar::SetHunger(float amount)
 	{
 		Hunger = Hunger + amount;
 	}
+	else {
+		Hunger = 100;
+	}
+	
 }
 
 // function to add stamina to player
@@ -285,6 +290,7 @@ void APlayerChar::SpawnBuilding(int buildingID, bool& isSucess)
 		// Check to see if player has what they are trying to build
 		if (BuildingArray[buildingID] >= 1)
 		{
+			//collision = false;
 			// Spawn building where player is currently looking and in current rotation
 			isBuilding = true;
 			FActorSpawnParameters SpawnParams;
@@ -294,9 +300,8 @@ void APlayerChar::SpawnBuilding(int buildingID, bool& isSucess)
 			FRotator myRot(0, 0, 0);
 
 			BuildingArray[buildingID] = BuildingArray[buildingID] - 1;
-
 			spawnedPart = GetWorld()->SpawnActor<ABuildingPart>(BuildPartClass, EndLocation, myRot, SpawnParams);
-
+			//spawnedPart->SetActorEnableCollision(collision);
 			isSucess = true;
 		}
 
